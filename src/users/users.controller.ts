@@ -1,63 +1,51 @@
-import { Controller, Get, Body, Post, Param, Put, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Body, Post, Param, Put, Delete, HttpException, HttpStatus} from '@nestjs/common';
+import { User } from './user.entity';
+import { UsersService } from './users.service';
 
-import{ User } from './user.entity';
-
-const users : User[] = [
-    {
-    id:0,
-    lastname:'Doe',
-    firstname:'John'
-    }
-]
 
 @Controller('users')
 export class UsersController {
 
-@Get('all')
-getAll(): string[] {
-    return ['oui', 'c\'est', 'moi'];
-}
-
-@Get()
-getUsers(): User[] {
-    return users;
-}
-
-@Get(':id')
-getById(@Param() parameter): User {
-    let userById = users.filter(user => +user.id === +parameter.id);
-    if (userById.length === 0) {
-        throw new HttpException(`Pas d'utilisateur avec pour id ${parameter.id}`, HttpStatus.NOT_FOUND)
+    // Constructeur pour l'appelle de service
+    constructor(
+        private service: UsersService
+    ) {
     }
-    return userById[0];
-}
 
-@Post()
-create(@Body() input: any): User {
-    let id = users.length;
-    let userToCreate = new User(id, input.lastname, input.firstname);
-    users.push(userToCreate);
-    return userToCreate;
-}
-
-@Put(':id')
-put(@Param() parameter, @Body() input) : User {
-    if(input.lastname !== undefined) {
-        this.getById(parameter).lastname = input.lastname;
+    @Get('all')
+    getAll(): string[] {
+        return this.service.getAll();
     }
-    if(input.firstname !== undefined) {
-        this.getById(parameter).firstname = input.firstname;
+
+    @Get()
+    getUsers(): User[] {
+        return this.service.getUsers();
     }
-    return this.getById(parameter);
+
+    @Get(':id')
+    getById(@Param() parameter): User {
+        let user_ = this.service.getById(parameter);
+        if (user_===undefined) {
+            throw new HttpException(`Pas d'utilisateur avec pour id ${parameter}`, HttpStatus.NOT_FOUND)
+        }else{
+            return user_;
+        }
+    }
+
+    @Post()
+    create(@Body() input: any): User {
+        return this.service.create(input.lastname, input.firstname,input.age)
+    }
+
+    @Put(':id')
+    put(@Param() parameter, @Body() input) : User {
+       return this.service.put(input.lastname, input.firstname, input.age, parameter);
+    }
+
+    @Delete(':id')
+    deleteById(@Param() parameter) : boolean {
+        return this.service.deleteById(parameter);
+    }
+
 }
 
-@Delete(':id')
-deleteById(@Param() parameter) : boolean {
-    let userToDelete = this.getById(parameter);
-    let index = users.findIndex(user => user.id === userToDelete.id);
-    let deletedUser = users.splice(index, 1);
-    return (deletedUser.length !== 0);
-}
-
-
-}
