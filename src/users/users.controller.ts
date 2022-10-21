@@ -35,9 +35,9 @@ getById(@Param() parameter): User {
 @Post()
 create(@Body() input: any): User {
     let id = users.length;
-    let user1 = new User(id, input.lastname, input.firstname);
-    users.push(user1);
-    return user1;
+    let userToCreate = new User(id, input.lastname, input.firstname);
+    users.push(userToCreate);
+    return userToCreate;
 }
 
 @Put(':id')
