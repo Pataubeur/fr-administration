@@ -1,62 +1,45 @@
 import { Controller, Get, Body, Post, Param, Put, Delete, HttpException, HttpStatus } from '@nestjs/common';
 
 import{ User } from './user.entity';
-
-const users : User[] = [
-    {
-    id:0,
-    lastname:'Doe',
-    firstname:'John'
-    }
-]
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
 
+constructor(private service: UsersService){}
+
 @Get('all')
 getAll(): string[] {
-    return ['oui', 'c\'est', 'moi'];
+    return this.service.getAll();
 }
 
 @Get()
 getUsers(): User[] {
-    return users;
+    return this.service.getUsers();
 }
 
 @Get(':id')
 getById(@Param() parameter): User {
-    let userById = users.filter(user => +user.id === +parameter.id);
-    if (userById.length === 0) {
+    let userById = this.service.getById(parameter.id);
+    if (userById === undefined) {
         throw new HttpException(`Pas d'utilisateur avec pour id ${parameter.id}`, HttpStatus.NOT_FOUND)
     }
-    return userById[0];
+    return userById;
 }
 
 @Post()
 create(@Body() input: any): User {
-    let id = users.length;
-    let userToCreate = new User(id, input.lastname, input.firstname);
-    users.push(userToCreate);
-    return userToCreate;
+    return this.service.create(input.lastname, input.fistname, input.age);
 }
 
 @Put(':id')
 put(@Param() parameter, @Body() input) : User {
-    if(input.lastname !== undefined) {
-        this.getById(parameter).lastname = input.lastname;
-    }
-    if(input.firstname !== undefined) {
-        this.getById(parameter).firstname = input.firstname;
-    }
-    return this.getById(parameter);
+    return this.service.put(parameter.id, input.lastname, input.firstname, input.age);
 }
 
 @Delete(':id')
 deleteById(@Param() parameter) : boolean {
-    let userToDelete = this.getById(parameter);
-    let index = users.findIndex(user => user.id === userToDelete.id);
-    let deletedUser = users.splice(index, 1);
-    return (deletedUser.length !== 0);
+    return this.service.deleteById(parameter.id);
 }
 
 
