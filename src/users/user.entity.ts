@@ -1,7 +1,14 @@
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
+@Entity()
 export class User {
-    id: number;
-    lastname: string;
-    firstname: string;
+    @PrimaryGeneratedColumn()
+    public id: number;
+    @Column()
+    public lastname: string;
+    @Column()
+    public firstname: string;
+    @Column()
     public age: number;
 
     constructor(id: number, lastname: string, firstname: string, age: number) {
