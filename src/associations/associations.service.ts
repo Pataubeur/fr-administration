@@ -6,7 +6,7 @@ import { Association } from './associations.entity';
 const associations : Association[] = [
     {
     id:0,
-    idUsers: [0, 1, 2, 3],
+    users: [new User(0, 'De Zordo', 'Benjamin',22)],
     name:'Utilisateurs'
     }
 ]
@@ -35,27 +35,27 @@ export class AssociationsService {
     }
 
     getMembers(id: number): User[] {
-        //console.log('Entrée');
-        let associationById = this.getById(id);
-        let usersByAssociation = [];
-        //console.log('Boucle');
-        associationById.idUsers.forEach(idUser => {
-            usersByAssociation.push(this.service.getById(idUser));
-            //console.log(usersByAssociation);
-        });
-        return usersByAssociation;
+        return this.getById(id).users;
     }
     
     create(idUsers: number[], name: string) {
         let id = associations.length;
-        let associationToCreate = new Association(id, idUsers, name);
+        let usersToCreate = []
+        idUsers.forEach(id => {
+            usersToCreate.push(this.service.getById(id));
+        });
+        let associationToCreate = new Association(id, usersToCreate, name);
         associations.push(associationToCreate);
         return associationToCreate;
     }
     
     put(id: number, idUsers: number[], name: string) : Association {
         if(idUsers !== undefined) {
-            this.getById(id).idUsers = idUsers;
+            let usersToCreate = []
+            idUsers.forEach(id => {
+                usersToCreate.push(this.service.getById(id));
+            });
+            this.getById(id).users = usersToCreate;
         }
         if(name !== undefined) {
             this.getById(id).name = name;
