@@ -23,7 +23,7 @@ export class UsersService {
         let userById = await this.repository.findOne({
             where : { id: Equal(idToFind) }
         });
-        return userById[0];
+        return userById;
     }
 
     public async create(lastname: string, firstname: string, age: number) : Promise<User> {
