@@ -14,15 +14,15 @@ export class AssociationsService {
         private service: UsersService
     ) {}
 
-    public getAll(): string[] {
+    public async getAll(): Promise<string[]> {
         return ['oui', 'c\'est', 'moi'];
     }
     
-    public getAssociations(): Repository<Association> {
-        return this.repository;
+    public async getAssociations(): Promise<Repository<Association>> {
+        return await this.repository;
     }
     
-    public async getById(idToFind: number): Promise<Association> {
+    public async getById(idToFind: number): Promise<Association> { 
         let associationById = await this.repository.findOne({
             where : { id: Equal(idToFind) }
         });
@@ -48,18 +48,18 @@ export class AssociationsService {
     }
     
     public async put(id: number, idUsers: number[], name: string) : Promise<Association> {
-        let associatinToModify = await this.getById(id);
+        let associationToModify = await this.getById(id);
         if(idUsers !== undefined) {
             let usersToCreate = []
             idUsers.forEach(id => {
                 usersToCreate.push(this.service.getById(id));
             });
-            associatinToModify.users = usersToCreate;
+            associationToModify.users = usersToCreate;
         }
         if(name !== undefined) {
-            associatinToModify.name = name;
+            associationToModify.name = name;
         }
-        this.repository.save(associatinToModify);
+        this.repository.save(associationToModify);
         return this.getById(id);
     }
     

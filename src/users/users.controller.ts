@@ -10,18 +10,18 @@ export class UsersController {
     constructor(private service: UsersService){}
 
     @Get('all')
-    public getAll(): string[] {
-        return this.service.getAll();
+    public async getAll(): Promise<string[]> {
+        return await this.service.getAll();
     }
 
     @Get()
-    public getUsers(): Repository<User> {
-        return this.service.getUsers();
+    public async getUsers(): Promise<Repository<User>> {
+        return await this.service.getUsers();
     }
 
     @Get(':id')
     public async getById(@Param() parameter): Promise<User> {
-        let userById = this.service.getById(parameter.id);
+        let userById = await this.service.getById(parameter.id);
         if (userById === null) {
             throw new HttpException(`Pas d'utilisateur avec pour id ${parameter.id}`, HttpStatus.NOT_FOUND)
         }
@@ -30,17 +30,17 @@ export class UsersController {
 
     @Post()
     public async create(@Body() input: any): Promise<User> {
-        return this.service.create(input.lastname, input.fistname, input.age);
+        return await this.service.create(input.lastname, input.fistname, input.age);
     }
 
     @Put(':id')
     public async put(@Param() parameter, @Body() input) : Promise<User> {
-        return this.service.put(parameter.id, input.lastname, input.firstname, input.age);
+        return await this.service.put(parameter.id, input.lastname, input.firstname, input.age);
     }
 
     @Delete(':id')
     public async deleteById(@Param() parameter) : Promise<boolean> {
-        return this.service.deleteById(parameter.id);
+        return await this.service.deleteById(parameter.id);
     }
 
 

@@ -10,13 +10,13 @@ export class AssociationsController {
     constructor(private service: AssociationsService){}
 
     @Get('all')
-    public getAll(): string[] {
-        return this.service.getAll();
+    public async getAll(): Promise<string[]> {
+        return await this.service.getAll();
     }
 
     @Get()
-    public getUsers(): Repository<Association> {
-        return this.service.getAssociations();
+    public async getUsers(): Promise<Repository<Association>> {
+        return await this.service.getAssociations();
     }
 
     @Get(':id')
@@ -30,22 +30,22 @@ export class AssociationsController {
 
     @Get(':id/members')
     public async getMembers(@Param() parameter): Promise<User[]> {
-        return this.service.getMembers(parameter.id);
+        return await this.service.getMembers(parameter.id);
     }
 
     @Post()
     public async create(@Body() input: any): Promise<Association> {
-        return this.service.create(input.userById, input.name);
+        return await this.service.create(input.userById, input.name);
     }
 
     @Put(':id')
     public async put(@Param() parameter, @Body() input) : Promise<Association> {
-        return this.service.put(parameter.id, input.idUsers, input.name);
+        return await this.service.put(parameter.id, input.idUsers, input.name);
     }
 
     @Delete(':id')
     public async deleteById(@Param() parameter) : Promise<boolean>{
-        return this.service.deleteById(parameter.id);
+        return await this.service.deleteById(parameter.id);
     }
 
 }
