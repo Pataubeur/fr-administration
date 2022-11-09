@@ -27,7 +27,7 @@ export class UsersService {
     }
 
     public async create(lastname: string, firstname: string, age: number) : Promise<User> {
-        let userToCreate = await this.repository.create({
+        let userToCreate = this.repository.create({
             lastname: lastname,
             firstname: firstname,
             age: age
@@ -42,10 +42,10 @@ export class UsersService {
             userToModify.lastname = lastname;
         }
         if(firstname !== undefined) {
-            userToModify.lastname = lastname;
+            userToModify.firstname = firstname;
         }
         if(age !== undefined) {
-            userToModify.lastname = lastname;
+            userToModify.age = age;
         }
         this.repository.save(userToModify);
         return this.getById(id);

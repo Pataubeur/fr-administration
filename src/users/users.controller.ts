@@ -16,11 +16,13 @@ export class UsersController {
 
     @Get()
     public async getUsers(): Promise<Repository<User>> {
+        console.log("Test");
         return await this.service.getUsers();
     }
 
     @Get(':id')
     public async getById(@Param() parameter): Promise<User> {
+        console.log("Test");
         let userById = await this.service.getById(parameter.id);
         if (userById === null) {
             throw new HttpException(`Pas d'utilisateur avec pour id ${parameter.id}`, HttpStatus.NOT_FOUND)
@@ -30,7 +32,7 @@ export class UsersController {
 
     @Post()
     public async create(@Body() input: any): Promise<User> {
-        return await this.service.create(input.lastname, input.fistname, input.age);
+        return await this.service.create(input.lastname, input.firstname, input.age);
     }
 
     @Put(':id')

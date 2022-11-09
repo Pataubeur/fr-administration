@@ -35,7 +35,7 @@ export class AssociationsController {
 
     @Post()
     public async create(@Body() input: any): Promise<Association> {
-        return await this.service.create(input.userById, input.name);
+        return await this.service.create(input.idUsers, input.name);
     }
 
     @Put(':id')

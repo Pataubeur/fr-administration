@@ -19,7 +19,7 @@ export class AssociationsService {
     }
     
     public async getAssociations(): Promise<Repository<Association>> {
-        return await this.repository;
+        return this.repository;
     }
     
     public async getById(idToFind: number): Promise<Association> { 
@@ -34,16 +34,16 @@ export class AssociationsService {
         return associationToGet.users;
     }
     
-    public async create(idUsers: number[], name: string) {
+    public async create(idUsers: number[], name: string) : Promise<Association> {
         let usersToCreate = []
         idUsers.forEach(id => {
             usersToCreate.push(this.service.getById(id));
         });
-        let associationToCreate = await this.repository.create({
+        let associationToCreate = this.repository.create({
             name: name,
             users: usersToCreate
         })
-        this.repository.save(associationToCreate);
+        await this.repository.save(associationToCreate);
         return associationToCreate;
     }
     
@@ -59,7 +59,7 @@ export class AssociationsService {
         if(name !== undefined) {
             associationToModify.name = name;
         }
-        this.repository.save(associationToModify);
+        await this.repository.save(associationToModify);
         return this.getById(id);
     }
     
