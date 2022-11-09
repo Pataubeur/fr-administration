@@ -3,7 +3,9 @@ import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import { Association } from './associations.entity';
 import { AssociationsService } from './associations.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('associations')
 @Controller('associations')
 export class AssociationsController {
 
