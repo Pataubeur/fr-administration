@@ -15,8 +15,8 @@ export class UsersService {
         return ['oui', 'c\'est', 'moi'];
     }
 
-    public async getUsers(): Promise<Repository<User>> {
-        return this.repository;
+    public async getUsers(): Promise<User[]> {
+        return this.repository.find();
     }
 
     public async getById(idToFind: number): Promise<User> {

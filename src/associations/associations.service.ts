@@ -18,8 +18,8 @@ export class AssociationsService {
         return ['oui', 'c\'est', 'moi'];
     }
     
-    public async getAssociations(): Promise<Repository<Association>> {
-        return this.repository;
+    public async getAssociations(): Promise<Association[]> {
+        return this.repository.find();
     }
     
     public async getById(idToFind: number): Promise<Association> { 
