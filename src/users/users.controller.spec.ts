@@ -57,7 +57,8 @@ describe('getAll', () => {
         id: 0, 
         firstname: 'John',
         lastname: 'Doe',
-        age: 23
+        age: 23,
+        password: "1234"
     }]);
     jest.spyOn(service, 'getAll').mockImplementation(() => expected);
     expect(await controller.getAll()).toBe(await expected);
@@ -86,7 +87,8 @@ describe('getById', () => {
         id: 0,
         firstname: 'John',
         lastname: 'Doe',
-        age: 23
+        age: 23,
+        password: "1234"
     }]);
     jest.spyOn(service, 'getById').mockImplementation(id => {
       return Promise.resolve(expected[id]);

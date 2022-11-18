@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import{ User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, Repository } from 'typeorm';
+import passport from 'passport';
 
 @Injectable()
 export class UsersService {
@@ -26,17 +27,18 @@ export class UsersService {
         return userById;
     }
 
-    public async create(lastname: string, firstname: string, age: number) : Promise<User> {
+    public async create(lastname: string, firstname: string, age: number, password: string) : Promise<User> {
         let userToCreate = this.repository.create({
             lastname: lastname,
             firstname: firstname,
-            age: age
+            age: age,
+            password: password
         })
         this.repository.save(userToCreate);
         return userToCreate;
     }
 
-    public async put(id: number, lastname: string, firstname: string, age: number) : Promise<User> {
+    public async put(id: number, lastname: string, firstname: string, age: number, password: string) : Promise<User> {
         let userToModify = await this.getById(id);
         if(lastname !== undefined) {
             userToModify.lastname = lastname;
@@ -46,6 +48,9 @@ export class UsersService {
         }
         if(age !== undefined) {
             userToModify.age = age;
+        }
+        if(password !== undefined) {
+            userToModify.password = password;
         }
         this.repository.save(userToModify);
         return this.getById(id);
