@@ -4,7 +4,7 @@ import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 import{ User } from './user.entity';
 import { UsersService } from './users.service';
-import { UserInput } from 'src/user_input.entity';
+import { UserInput } from './user_input.entity';
 
 @ApiTags('users')
 @Controller('users')
@@ -12,14 +12,14 @@ export class UsersController {
 
     constructor(private service: UsersService){}
 
-    @Get('all')
-    public async getAll(): Promise<string[]> {
-        return await this.service.getAll();
-    }
+//    @Get('all')
+//    public async getAll(): Promise<string[]> {
+//        return await this.service.getAll();
+//    }
 
     @Get()
-    public async getUsers(): Promise<User[]> {
-        return await this.service.getUsers();
+    public async getAll(): Promise<User[]> {
+        return await this.service.getAll();
     }
 
     @Get(':id')

@@ -10,5 +10,4 @@ export class User {
     public firstname: string;
     @Column()
     public age: number;
-
 }
