@@ -63,3 +63,34 @@ describe('getAll', () => {
     expect(await controller.getAll()).toBe(await expected);
   });
 });
+
+describe('getById', () => {
+  let controller: UsersController;
+  let service: UsersService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [UsersController],
+      providers: [
+        UsersService
+      ,{ provide: getRepositoryToken(User), useFactory: repositoryMockFactory}
+    ]
+    }).compile();
+
+    service = module.get<UsersService>(UsersService);
+    controller = module.get<UsersController>(UsersController);
+  });
+
+  it('should return a single user, with the provided id', async () => {
+    const expected = await Promise.all([{ 
+        id: 0,
+        firstname: 'John',
+        lastname: 'Doe',
+        age: 23
+    }]);
+    jest.spyOn(service, 'getById').mockImplementation(id => {
+      return Promise.resolve(expected[id]);
+    });
+    expect(await controller.getById({id: 0})).toBe(await expected[0]);
+  })
+});
