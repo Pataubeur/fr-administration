@@ -14,11 +14,11 @@ export class AssociationsService {
         private service: UsersService
     ) {}
 
-    public async getAll(): Promise<string[]> {
-        return ['oui', 'c\'est', 'moi'];
-    }
+    //public async getAll(): Promise<string[]> {
+    //    return ['oui', 'c\'est', 'moi'];
+    //}
     
-    public async getAssociations(): Promise<Association[]> {
+    public async getAll(): Promise<Association[]> {
         return this.repository.find();
     }
     

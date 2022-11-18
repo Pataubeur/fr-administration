@@ -11,14 +11,14 @@ export class AssociationsController {
 
     constructor(private service: AssociationsService){}
 
-    @Get('all')
-    public async getAll(): Promise<string[]> {
-        return await this.service.getAll();
-    }
+    //@Get('all')
+    //public async getAll(): Promise<string[]> {
+    //    return await this.service.getAll();
+    //}
 
     @Get()
-    public async getUsers(): Promise<Association[]> {
-        return await this.service.getAssociations();
+    public async getAll(): Promise<Association[]> {
+        return await this.service.getAll();
     }
 
     @Get(':id')

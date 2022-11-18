@@ -11,11 +11,11 @@ export class UsersService {
             private repository: Repository<User>
         ) {}
 
-   public async getAll(): Promise<string[]> {
-        return ['oui', 'c\'est', 'moi'];
-    }
+   //public async getAll(): Promise<string[]> {
+   //     return ['oui', 'c\'est', 'moi'];
+   //}
 
-    public async getUsers(): Promise<User[]> {
+    public async getAll(): Promise<User[]> {
         return this.repository.find();
     }
 
