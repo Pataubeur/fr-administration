@@ -2,6 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class UserInput {
 
+//    password(lastname: string, firstname: string, age: number, password: any): import("./user.entity").User | PromiseLike<import("./user.entity").User> {
+//        throw new Error('Method not implemented.');
+//    }
+
     @ApiProperty({
         description: 'The firtname of the user',
         example: "John",
@@ -23,4 +27,12 @@ export class UserInput {
         type: Number,
     })
     public age: number;
+
+    @ApiProperty({
+        description: 'The Password of the user',
+        example: "jaimelescarrotes",
+        type: String,
+    })
+    public password: string;
+
 }

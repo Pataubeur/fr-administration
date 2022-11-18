@@ -8,6 +8,7 @@ import { AssociationsModule } from './associations/associations.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Association } from './associations/associations.entity';
 import { User } from './users/user.entity';
+import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [
@@ -22,6 +23,6 @@ import { User } from './users/user.entity';
       }),
     UsersModule, AssociationsModule],
   controllers: [AppController, AssociationsController],
-  providers: [AppService],
+  providers: [AppService, AuthService],
 })
 export class AppModule {}

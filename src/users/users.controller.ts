@@ -37,12 +37,12 @@ export class UsersController {
     })
     @Post()
     public async create(@Body() input: UserInput): Promise<User> {
-        return await this.service.create(input.lastname, input.firstname, input.age);
+        return await this.service.create(input.lastname, input.firstname, input.age, input.password);
     }
 
     @Put(':id')
     public async put(@Param() parameter, @Body() input) : Promise<User> {
-        return await this.service.put(parameter.id, input.lastname, input.firstname, input.age);
+        return await this.service.put(parameter.id, input.lastname, input.firstname, input.age, input.password);
     }
 
     @Delete(':id')
