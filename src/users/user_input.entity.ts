@@ -23,7 +23,7 @@ export class UserInput {
         type: Number,
     })
     public age: number;
-
+    
     @ApiProperty({
         description: 'The password of the user',
         example: "1234",
