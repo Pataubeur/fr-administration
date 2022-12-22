@@ -1,9 +1,10 @@
-import { Controller, Get, Body, Post, Param, Put, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Body, Post, Param, Put, Delete, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import{ User } from './user.entity';
 import { UsersService } from './users.service';
 import { UserInput } from './user_input.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('users')
 @Controller('users')
@@ -16,6 +17,7 @@ export class UsersController {
     //    return await this.service.getAll();
     //}
 
+    @UseGuards(AuthGuard('jwt'))
     @Get()
     public async getAll(): Promise<User[]> {
         return await this.service.getAll();
