@@ -54,12 +54,12 @@ export class UsersService {
         if(age !== undefined) {
             userToModify.age = age;
         }
-        const saltOrRounds = 10;
-        const hash = await bcrypt.hash(password, saltOrRounds);
         if(password !== undefined) {
+            const saltOrRounds = 10;
+            const hash = await bcrypt.hash(password, saltOrRounds);
             userToModify.password = hash;
         }
-        this.repository.save(userToModify);
+        await this.repository.save(userToModify);
         return this.getById(id);
     }
 
