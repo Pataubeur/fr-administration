@@ -3,7 +3,8 @@ import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import { Association } from './associations.entity';
 import { AssociationsService } from './associations.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { AssociationsInput } from './associations_input.entity';
 
 @ApiTags('associations')
 @Controller('associations')
@@ -19,13 +20,14 @@ export class AssociationsController {
     @Get()
     public async getAll(): Promise<Association[]> {
         return await this.service.getAll();
+
     }
 
     @Get(':id')
     public async getById(@Param() parameter): Promise<Association> {
-    let associationById = await this.service.getById(parameter.id);
+        let associationById = await this.service.getById(parameter.id);
         if (associationById === null) {
-            throw new HttpException(`Pas d'utilisateur avec pour id ${parameter.id}`, HttpStatus.NOT_FOUND)
+            throw new HttpException(`Pas d'association avec pour id ${parameter.id}`, HttpStatus.NOT_FOUND)
         }
         return associationById;
     }
@@ -35,8 +37,12 @@ export class AssociationsController {
         return await this.service.getMembers(parameter.id);
     }
 
+    @ApiCreatedResponse({
+        description: 'The association has been successfully created.'
+    })
+    
     @Post()
-    public async create(@Body() input: any): Promise<Association> {
+    public async create(@Body() input: AssociationsInput): Promise<Association> {
         return await this.service.create(input.idUsers, input.name);
     }
 
