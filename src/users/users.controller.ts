@@ -18,6 +18,7 @@ export class UsersController {
     //}
 
     @UseGuards(AuthGuard('jwt'))
+
     @Get()
     public async getAll(): Promise<User[]> {
         return await this.service.getAll();
@@ -36,6 +37,7 @@ export class UsersController {
     @ApiCreatedResponse({
         description: 'The user has been successfully created.'
     })
+    
     @Post()
     public async create(@Body() input: UserInput): Promise<User> {
         return await this.service.create(input.lastname, input.firstname, input.age, input.password);

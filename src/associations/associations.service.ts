@@ -4,6 +4,7 @@ import { UsersService } from 'src/users/users.service';
 import { Association } from './associations.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, Repository } from 'typeorm';
+import { use } from 'passport';
 
 @Injectable()
 export class AssociationsService {
@@ -35,6 +36,21 @@ export class AssociationsService {
     }
     
     public async create(idUsers: number[], name: string) : Promise<Association> {
+        let users: User[] = [];
+        for (let id of idUsers) {
+            users.push(await this.service.getById(id));
+        }
+        let associationToCreate = this.repository.create({
+            name: name,
+            users: users,
+        })
+        await this.repository.save(associationToCreate);
+        return associationToCreate;
+    }
+
+/*
+
+    public async create(idUsers: number[], name: string) : Promise<Association> {
         let usersToCreate = []
         idUsers.forEach(id => {
             usersToCreate.push(this.service.getById(id));
@@ -45,8 +61,8 @@ export class AssociationsService {
         })
         await this.repository.save(associationToCreate);
         return associationToCreate;
-    }
-    
+*/
+
     public async put(id: number, idUsers: number[], name: string) : Promise<Association> {
         let associationToModify = await this.getById(id);
         if(idUsers !== undefined) {
