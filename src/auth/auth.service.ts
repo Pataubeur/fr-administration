@@ -10,12 +10,12 @@ export class AuthService {
     constructor(
         private service: UsersService,
         private jwtService: JwtService
-        ){}
+    ) { }
 
-    public async validateUser(id: number, password: string) : Promise<User> {
+    public async validateUser(id: number, password: string): Promise<User> {
         let user = await this.service.getById(id)
 
-        if(await bcrypt.compare(password, user.password)) {
+        if (await bcrypt.compare(password, user.password)) {
             return user;
         } else {
             return undefined;

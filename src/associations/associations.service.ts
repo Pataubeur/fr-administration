@@ -31,8 +31,8 @@ export class AssociationsService {
     }
 
     public async getMembers(id: number): Promise<User[]> {
-        let associationToGet = await this.getById(id);
-        return associationToGet.users;
+        let usersToGet = await this.getById(id);
+        return usersToGet.users;
     }
     
     public async create(idUsers: number[], name: string) : Promise<Association> {
@@ -49,7 +49,6 @@ export class AssociationsService {
     }
 
 /*
-
     public async create(idUsers: number[], name: string) : Promise<Association> {
         let usersToCreate = []
         idUsers.forEach(id => {

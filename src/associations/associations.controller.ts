@@ -10,7 +10,7 @@ import { AssociationsInput } from './associations_input.entity';
 @Controller('associations')
 export class AssociationsController {
 
-    constructor(private service: AssociationsService){}
+    constructor(private service: AssociationsService) { }
 
     //@Get('all')
     //public async getAll(): Promise<string[]> {
@@ -32,6 +32,7 @@ export class AssociationsController {
         return associationById;
     }
 
+    // Weird
     @Get(':id/members')
     public async getMembers(@Param() parameter): Promise<User[]> {
         return await this.service.getMembers(parameter.id);
@@ -40,19 +41,19 @@ export class AssociationsController {
     @ApiCreatedResponse({
         description: 'The association has been successfully created.'
     })
-    
+
     @Post()
     public async create(@Body() input: AssociationsInput): Promise<Association> {
         return await this.service.create(input.idUsers, input.name);
     }
 
     @Put(':id')
-    public async put(@Param() parameter, @Body() input) : Promise<Association> {
+    public async put(@Param() parameter, @Body() input): Promise<Association> {
         return await this.service.put(parameter.id, input.idUsers, input.name);
     }
 
     @Delete(':id')
-    public async deleteById(@Param() parameter) : Promise<boolean>{
+    public async deleteById(@Param() parameter): Promise<boolean> {
         return await this.service.deleteById(parameter.id);
     }
 
