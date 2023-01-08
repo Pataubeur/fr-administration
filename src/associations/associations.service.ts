@@ -5,6 +5,7 @@ import { Association } from './associations.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, Repository } from 'typeorm';
 import { use } from 'passport';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AssociationsService {
@@ -32,6 +33,7 @@ export class AssociationsService {
 
     public async getMembers(id: number): Promise<User[]> {
         let usersToGet = await this.getById(id);
+        console.log("try to getMember");
         return usersToGet.users;
     }
     

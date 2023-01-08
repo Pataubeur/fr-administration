@@ -17,7 +17,7 @@ import { AuthModule } from './auth/auth.module';
       database: 'mydatabase.db',
       entities: [
         User,
-        Association
+        Association,
       ],
       synchronize: true,
       }),
