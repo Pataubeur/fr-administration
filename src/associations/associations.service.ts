@@ -82,7 +82,7 @@ export class AssociationsService {
     
     public async deleteById(id: number) : Promise<boolean> {
         let associationToDelete = await this.getById(id);
-        let associationDeleted = await this.repository.delete(associationToDelete);
+        let associationDeleted = await this.repository.remove(associationToDelete);
         return (associationDeleted !== null);
     }
 
