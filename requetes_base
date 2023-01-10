@@ -4,3 +4,5 @@ curl -X POST http://localhost:3000/users -d "firstname=Arthur&lastname=Allain&ag
 
 curl -X POST -d "idUsers[]=6&name=Actors" http://localhost:3000/associations/
 curl -X POST -d "idUsers[]=7&idUsers=8&name=Students" http://localhost:3000/associations/
+
+curl -X POST -d "idUsers[]=9&idUsers=8&idUsers=7&name=Kind Guy" http://localhost:3000/associations/
